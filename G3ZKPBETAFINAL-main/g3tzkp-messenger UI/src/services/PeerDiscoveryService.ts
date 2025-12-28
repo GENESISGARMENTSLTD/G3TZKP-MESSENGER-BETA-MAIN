@@ -1,4 +1,5 @@
 import io, { Socket } from 'socket.io-client';
+import { getApiUrl } from '../utils/apiConfig';
 
 export interface NearbyPeer {
   peerId: string;
@@ -22,10 +23,7 @@ class PeerDiscoveryService {
   initialize(serverUrl?: string): void {
     if (this.socket) return;
 
-    const wsProtocol = typeof window !== 'undefined' && window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const host = typeof window !== 'undefined' ? window.location.hostname : 'localhost';
-    const defaultUrl = `${wsProtocol === 'wss' ? 'https' : 'http'}://${host}:3001`;
-    const url = serverUrl || defaultUrl;
+    const url = serverUrl || getApiUrl();
 
     console.log('[PeerDiscovery] Connecting to:', url);
     this.setConnectionStatus('connecting');

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { X, Phone, Video, Users, CreditCard, Settings as SettingsIcon, Shield, Binary, Hash, Lock, Activity, Zap, Award, Loader2, RefreshCw, Volume2, VolumeX, Bell, BellOff, Moon, Sun, Eye, EyeOff, Mic, MicOff, VideoOff, PhoneOff, Monitor } from 'lucide-react';
 import { useThemeStore } from '../stores/themeStore';
+import { getApiUrl } from '../utils/apiConfig';
 
 export interface ModalProps {
   onClose: () => void;
@@ -509,7 +510,7 @@ export const LicenseModal: React.FC<{ status: any, onClose: () => void }> = ({ s
 
   // Check for beta mode on mount
   React.useEffect(() => {
-    fetch('/api/health')
+    fetch(`${getApiUrl()}/api/health`)
       .then(res => res.json())
       .then(data => {
         // Check if beta mode is enabled (we'll add this to health endpoint)
@@ -523,7 +524,7 @@ export const LicenseModal: React.FC<{ status: any, onClose: () => void }> = ({ s
     try {
       if (isBetaMode && selectedPlan === 'lifetime') {
         // BETA MODE: Direct lifetime license grant
-        const response = await fetch('/api/licenses/beta-lifetime', {
+        const response = await fetch(`${getApiUrl()}/api/licenses/beta-lifetime`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' }
         });
@@ -538,7 +539,7 @@ export const LicenseModal: React.FC<{ status: any, onClose: () => void }> = ({ s
         }
       } else if (selectedPlan === 'trial') {
         // Request trial license
-        const response = await fetch('/api/licenses/trial', {
+        const response = await fetch(`${getApiUrl()}/api/licenses/trial`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' }
         });
@@ -553,7 +554,7 @@ export const LicenseModal: React.FC<{ status: any, onClose: () => void }> = ({ s
         }
       } else {
         // PRODUCTION: Create Stripe checkout session
-        const response = await fetch('/api/payments/create-session', {
+        const response = await fetch(`${getApiUrl()}/api/payments/create-session`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

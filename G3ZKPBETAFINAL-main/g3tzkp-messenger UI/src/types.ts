@@ -88,6 +88,7 @@ export interface LicenseStatus {
 export interface PeerInfo {
   id?: string;
   peerId: string;
+  displayName?: string;
   publicKey?: string;
   status?: 'online' | 'away' | 'offline';
   lastSeen?: number;

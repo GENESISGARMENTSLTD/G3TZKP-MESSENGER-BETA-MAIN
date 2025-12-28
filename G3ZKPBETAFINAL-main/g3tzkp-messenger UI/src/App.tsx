@@ -69,8 +69,9 @@ import IntegratedChat from './components/IntegratedChat';
 import MeshPage from './pages/MeshPage';
 import GroupAdminPanel from './components/groups/GroupAdminPanel';
 import { groupManagementService } from './services/GroupManagementService';
+import { getApiUrl } from './utils/apiConfig';
 
-const FlowerOfLife: React.FC<{ size?: number, color?: string, rotorSpeed?: string }> = ({ 
+const FlowerOfLife: React.FC<{ size?: number, color?: string, rotorSpeed?: string }> = ({  
   size = 200, color = "currentColor", rotorSpeed = "40s" 
 }) => {
   const radius = size / 6;
@@ -227,13 +228,13 @@ const App: React.FC = () => {
         }
 
         // Check if beta mode is enabled
-        const healthResponse = await fetch('/api/health');
+        const healthResponse = await fetch(`${getApiUrl()}/api/health`);
         const health = await healthResponse.json();
 
         if (health.betaMode) {
           console.log('[BETA] Beta mode detected, requesting lifetime license...');
 
-          const response = await fetch('/api/licenses/beta-lifetime', {
+          const response = await fetch(`${getApiUrl()}/api/licenses/beta-lifetime`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
           });
@@ -731,7 +732,7 @@ const App: React.FC = () => {
       });
       const base64Data = await base64Promise;
       
-      const response = await fetch('/api/voice/upload', {
+      const response = await fetch(`${getApiUrl()}/api/voice/upload`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -2,6 +2,7 @@ import { io, Socket } from 'socket.io-client';
 import { cryptoService, EncryptedData } from './CryptoService';
 import { Message, PeerInfo } from '../types';
 import { libP2PService, LibP2PMessage } from './LibP2PService';
+import { getApiUrl } from '../utils/apiConfig';
 
 export interface MessagePayload {
   id: string;
@@ -127,30 +128,7 @@ class MessagingService {
   }
 
   private getServerUrl(): string {
-    // Check for environment variable first (for production deployment)
-    const envApiUrl = import.meta.env.VITE_API_URL;
-    if (envApiUrl) {
-      console.log('[MessagingService] Using VITE_API_URL:', envApiUrl);
-      return envApiUrl;
-    }
-
-    if (typeof window !== 'undefined') {
-      const hostname = window.location.hostname;
-      const isSecure = window.location.protocol === 'https:';
-      
-      // Local development
-      if (hostname === 'localhost' || hostname === '127.0.0.1') {
-        return `http://${hostname}:3001`;
-      }
-      
-      // Production: use same origin (frontend and backend on same domain)
-      // or construct URL from current location
-      const port = window.location.port || (isSecure ? '443' : '80');
-      return isSecure 
-        ? `https://${hostname}${port !== '443' ? ':' + port : ''}`
-        : `http://${hostname}${port !== '80' ? ':' + port : ''}`;
-    }
-    return 'http://localhost:3001';
+    return getApiUrl();
   }
 
   private generateId(length: number): string {
@@ -348,7 +326,7 @@ class MessagingService {
       if (canUseP2P) {
         try {
           const payloadBytes = new TextEncoder().encode(JSON.stringify(payload));
-          await libP2PService.sendDirectMessage(payload.recipientId, payloadBytes);
+          await libP2PService.sendMessage(payload.recipientId, payloadBytes);
           sent = true;
           console.log('[MessagingService] Queued message sent via P2P to:', payload.recipientId);
         } catch (err) {
@@ -423,7 +401,8 @@ class MessagingService {
   }
 
   establishSession(peerId: string, publicKey: string): void {
-    cryptoService.establishSession(peerId, publicKey);
+    // Requires full KeyBundle, legacy method stub
+    console.warn('[MessagingService] establishSession with just publicKey is deprecated');
   }
 
   async initializeP2P(): Promise<void> {
@@ -446,9 +425,9 @@ class MessagingService {
         console.log('[MessagingService] P2P peer connected:', peer.id);
         const peerInfo: PeerInfo = {
           peerId: peer.id,
-          name: peer.metadata?.name || 'P2P_PEER',
+          displayName: peer.metadata?.name || 'P2P_PEER',
           publicKey: peer.metadata?.publicKey,
-          isOnline: true,
+          status: 'online',
           lastSeen: peer.lastSeen.getTime()
         };
         this.connectedPeers.set(peer.id, peerInfo);
@@ -482,7 +461,7 @@ class MessagingService {
 
     try {
       const payloadBytes = new TextEncoder().encode(JSON.stringify(payload));
-      await libP2PService.sendDirectMessage(recipientId, payloadBytes);
+      await libP2PService.sendMessage(recipientId, payloadBytes);
       console.log('[MessagingService] Message sent via P2P to:', recipientId);
       return true;
     } catch (error) {
@@ -525,7 +504,7 @@ class MessagingService {
       this.socket = null;
     }
     if (this.libp2pInitialized) {
-      libP2PService.stop();
+      libP2PService.shutdown();
       this.libp2pInitialized = false;
     }
     this.isConnected = false;

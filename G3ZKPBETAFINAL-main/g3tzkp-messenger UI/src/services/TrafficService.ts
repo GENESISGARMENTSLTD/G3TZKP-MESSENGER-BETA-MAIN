@@ -4,6 +4,7 @@ import { io, Socket } from 'socket.io-client';
 import libP2PService from './LibP2PService';
 import { createAndSignReport, GeoLocation, HazardData } from './geo/GeoBroadcastTypes';
 import nacl from 'tweetnacl';
+import { getApiUrl } from '../utils/apiConfig';
 
 export interface TrafficReport {
   id: string;
@@ -53,22 +54,7 @@ interface StoredHazard extends HazardReport {
   verificationCount: number;
 }
 
-const getSocketUrl = (): string => {
-  if (typeof window !== 'undefined') {
-    const hostname = window.location.hostname;
-    const isSecure = window.location.protocol === 'https:';
-    if (hostname === 'localhost' || hostname === '127.0.0.1') {
-      return `http://${hostname}:${import.meta.env.VITE_MESSAGING_PORT || 3001}`;
-    }
-    const port = window.location.port || (isSecure ? '443' : '80');
-    return isSecure 
-      ? `https://${hostname}${port !== '443' ? ':' + port : ''}`
-      : `http://${hostname}${port !== '80' ? ':' + port : ''}`;
-  }
-  return `http://localhost:${import.meta.env.VITE_MESSAGING_PORT || 3001}`;
-};
-
-const SOCKET_URL = getSocketUrl();
+const SOCKET_URL = getApiUrl();
 
 class TrafficServiceClass {
   private socket: Socket | null = null;

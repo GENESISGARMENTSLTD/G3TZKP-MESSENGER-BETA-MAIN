@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import nacl from 'tweetnacl';
 import { encodeBase64, decodeBase64 } from 'tweetnacl-util';
+import { getApiUrl } from '../utils/apiConfig';
 
 export interface G3ZKPLicense {
   id: string;
@@ -144,7 +145,7 @@ export class DeviceSyncService {
 
   private async registerDeviceWithServer(deviceLink: DeviceLink): Promise<void> {
     // Register device with backend
-    const response = await fetch('/api/devices/register', {
+    const response = await fetch(`${getApiUrl()}/api/devices/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

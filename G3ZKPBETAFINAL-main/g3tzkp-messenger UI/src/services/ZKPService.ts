@@ -4,31 +4,10 @@
  * using real snarkjs Groth16 proofs when circuit files are available
  */
 
-const getApiBase = (): string => {
-  if (typeof window !== 'undefined' && window.location) {
-    const hostname = window.location.hostname;
-    
-    if (hostname === 'localhost' || hostname === '127.0.0.1') {
-      return 'http://localhost:3001';
-    }
-    
-    return '';
-  }
-  return 'http://localhost:3001';
-};
-
-let cachedApiBase: string | null = null;
+import { getApiUrl } from '../utils/apiConfig';
 
 const getOrCacheApiBase = (): string => {
-  if (cachedApiBase === null) {
-    cachedApiBase = getApiBase();
-    if (cachedApiBase) {
-      console.log('[ZKPService] API Base URL:', cachedApiBase);
-    } else {
-      console.log('[ZKPService] Using relative API paths');
-    }
-  }
-  return cachedApiBase;
+  return getApiUrl();
 };
 
 export interface ZKProof {

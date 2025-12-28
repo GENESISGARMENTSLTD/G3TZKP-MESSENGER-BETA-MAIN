@@ -2,6 +2,7 @@ import { Coordinate, Route, SearchResult, OfflineRegion, PrivacySettings } from 
 import libP2PService from './LibP2PService';
 import { createAndSignReport, GeoLocation, TrafficData } from './geo/GeoBroadcastTypes';
 import nacl from 'tweetnacl';
+import { getApiUrl } from '../utils/apiConfig';
 
 const DEFAULT_PRIVACY: PrivacySettings = {
   locationObfuscation: true,
@@ -31,7 +32,7 @@ class NavigationService {
   private readonly MIN_SPEED_FOR_REPORT = 5;
 
   constructor() {
-    this.baseUrl = '';
+    this.baseUrl = getApiUrl();
     this.privacySettings = DEFAULT_PRIVACY;
     this.initializeP2PKeys();
   }

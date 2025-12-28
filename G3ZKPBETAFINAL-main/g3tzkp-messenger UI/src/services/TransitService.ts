@@ -1,5 +1,6 @@
 import { Coordinate } from '../types/navigation';
 import { europeanTransitService, TransitJourney as EuropeanJourney } from './EuropeanTransitService';
+import { getApiUrl } from '../utils/apiConfig';
 
 export interface TransitLeg {
   mode: 'tube' | 'bus' | 'train' | 'tram' | 'dlr' | 'overground' | 'elizabeth-line' | 'walking' | 'cycling';
@@ -60,17 +61,7 @@ export interface LineStatus {
 }
 
 // FIXED: Set API_BASE to point to messaging server
-const getApiBase = () => {
-  if (typeof window !== 'undefined') {
-    const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:';
-    const hostname = window.location.hostname;
-    const port = hostname === 'localhost' || hostname === '127.0.0.1' ? ':3001' : '';
-    return `${protocol}//${hostname}${port}`;
-  }
-  return '';
-};
-
-const API_BASE = getApiBase();
+const API_BASE = getApiUrl();
 
 const MODE_COLORS: Record<string, string> = {
   'tube': '#0019A8',

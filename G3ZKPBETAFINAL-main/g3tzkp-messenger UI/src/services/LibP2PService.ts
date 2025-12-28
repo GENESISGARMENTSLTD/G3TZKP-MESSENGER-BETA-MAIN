@@ -702,6 +702,14 @@ class LibP2PService extends EventEmitter {
     return this.node?.getMultiaddrs().map(ma => ma.toString()) || [];
   }
 
+  getStats(): { peerId: string; connectedPeers: number; uptime: number } {
+    return {
+      peerId: this.localPeerId,
+      connectedPeers: this.getConnectedPeers().length,
+      uptime: this.startTime > 0 ? Date.now() - this.startTime : 0
+    };
+  }
+
   isInitialized(): boolean {
     return this.initialized && this.node !== null && !this.node.isStopped();
   }
