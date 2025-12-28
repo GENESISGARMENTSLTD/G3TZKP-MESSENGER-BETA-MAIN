@@ -1,4 +1,6 @@
-const MESSAGING_SERVER = '';
+import { getApiUrl } from '../utils/apiConfig';
+
+const MESSAGING_SERVER = getApiUrl();
 
 export interface MediaMetadata {
   id: string;

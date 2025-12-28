@@ -67,6 +67,8 @@ export interface RealCryptoState {
   online: boolean;
 }
 
+import { getApiUrl } from '../utils/apiConfig';
+
 class CryptoStateService {
   getX3DHState(): X3DHState {
     const identityKey = localStorage.getItem('g3zkp_identity_key');

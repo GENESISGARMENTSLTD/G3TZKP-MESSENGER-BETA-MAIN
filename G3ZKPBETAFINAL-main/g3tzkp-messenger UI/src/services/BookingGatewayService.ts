@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { getApiUrl } from '../utils/apiConfig';
 
 export interface BookingSession {
   id: string;
@@ -129,7 +130,7 @@ export class BookingGatewayService {
     try {
       const sanitizedUrl = this.sanitizeUrl(bookingUrl);
 
-      const gatewayResponse = await fetch('/api/flights/booking-gateway', {
+      const gatewayResponse = await fetch(`${getApiUrl()}/api/flights/booking-gateway`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -389,7 +390,7 @@ export class BookingGatewayService {
       this.sessionTimeout = null;
     }
 
-    fetch('/api/flights/booking-gateway/cleanup', {
+    fetch(`${getApiUrl()}/api/flights/booking-gateway/cleanup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MessageSquare, Send, X, CheckCircle, AlertCircle, Star } from 'lucide-react';
+import { getApiUrl } from '../../utils/apiConfig';
 
 interface FeedbackDialogProps {
   onClose: () => void;
@@ -52,7 +53,7 @@ export function FeedbackDialog({ onClose }: FeedbackDialogProps) {
         }
       } else {
         // Web version - send to server
-        const response = await fetch('/api/feedback', {
+        const response = await fetch(`${getApiUrl()}/api/feedback`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(feedback)

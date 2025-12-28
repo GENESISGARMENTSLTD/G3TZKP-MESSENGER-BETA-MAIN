@@ -8,6 +8,7 @@ import type {
   BusinessValidationResult,
   BusinessNetworkMessage
 } from '../types/business';
+import { getApiUrl } from '../utils/apiConfig';
 
 const BASE32_CHARS = '0123456789bcdefghjkmnpqrstuvwxyz';
 const DB_NAME = 'g3tzkp_business_db';
@@ -334,7 +335,7 @@ export class BusinessVerificationService {
     try {
       const normalizedCRN = crn.toUpperCase().replace(/\s+/g, '').padStart(8, '0');
       
-      const response = await fetch('/api/verify-company', {
+      const response = await fetch(`${getApiUrl()}/api/verify-company`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ crn: normalizedCRN })
@@ -544,7 +545,7 @@ export class BusinessVerificationService {
     };
 
     try {
-      await fetch('/api/p2p/broadcast', {
+      await fetch(`${getApiUrl()}/api/p2p/broadcast`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

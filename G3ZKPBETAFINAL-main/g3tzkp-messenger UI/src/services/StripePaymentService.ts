@@ -1,4 +1,5 @@
 import { loadStripe, Stripe } from '@stripe/stripe-js';
+import { getApiUrl } from '../utils/apiConfig';
 
 export interface PaymentConfig {
   publicKey: string;
@@ -29,7 +30,7 @@ export class StripePaymentService {
   }
 
   async createCheckoutSession(): Promise<CheckoutSession> {
-    const response = await fetch('/api/payments/create-session', {
+    const response = await fetch(`${getApiUrl()}/api/payments/create-session`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -63,7 +64,7 @@ export class StripePaymentService {
   }
 
   async handlePaymentSuccess(sessionId: string): Promise<any> {
-    const response = await fetch(`/api/payments/session/${sessionId}`, {
+    const response = await fetch(`${getApiUrl()}/api/payments/session/${sessionId}`, {
       method: 'GET',
     });
 

@@ -1,5 +1,6 @@
 import { DeviceFingerprintService, SignedLicense } from './DeviceFingerprintService';
 import { CryptoService } from './CryptoService';
+import { getApiUrl } from '../utils/apiConfig';
 
 export interface LicenseStatus {
   isValid: boolean;
@@ -71,7 +72,7 @@ export class LicenseService {
 
   async activateLifetimeLicense(paymentSessionId: string): Promise<LicenseStatus> {
     // Verify payment with backend
-    const response = await fetch('/api/licenses/activate', {
+    const response = await fetch(`${getApiUrl()}/api/licenses/activate`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

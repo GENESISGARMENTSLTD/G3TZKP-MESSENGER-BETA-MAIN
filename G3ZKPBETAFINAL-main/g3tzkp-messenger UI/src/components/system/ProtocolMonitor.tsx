@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { Activity, Zap } from 'lucide-react';
+import { getApiUrl } from '../../utils/apiConfig';
 
 interface ProtocolEvent {
   id: string;
@@ -104,7 +105,7 @@ const ProtocolMonitor: React.FC = () => {
 
     const checkZKPStatus = async () => {
       try {
-        const response = await fetch('/api/zkp/status');
+        const response = await fetch(`${getApiUrl()}/api/zkp/status`);
         if (response.ok) {
           const data = await response.json();
           addEvent('zkp', `ZKP: Engine ${data.mode} - ${data.initialized ? 'Ready' : 'Initializing'}`, 
@@ -125,7 +126,7 @@ const ProtocolMonitor: React.FC = () => {
 
     const checkHealth = async () => {
       try {
-        const response = await fetch('/api/health');
+        const response = await fetch(`${getApiUrl()}/api/health`);
         if (response.ok) {
           const data = await response.json();
           if (data.connectedPeers > 0) {
