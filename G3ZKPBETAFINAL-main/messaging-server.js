@@ -128,7 +128,6 @@ app.use('/media', express.static(MEDIA_STORAGE_DIR));
 
 const axios = require('axios');
 const { LRUCache } = require('lru-cache');
-const crypto = require('crypto');
 
 // Licensing system
 const LICENSE_SECRET_KEY = process.env.LICENSE_SECRET_KEY || 'your_secure_signing_key_256_chars_min';
