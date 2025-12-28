@@ -68,6 +68,7 @@ export default defineConfig({
       '@contexts': path.resolve(__dirname, './src/contexts'),
       '@utils': path.resolve(__dirname, './src/utils'),
       '@assets': path.resolve(__dirname, './attached_assets'),
+      '@libp2p/fetch': path.resolve(__dirname, './src/utils/mock.js'),
       '@zip.js/zip.js/lib/zip-no-worker.js': '@zip.js/zip.js',
       './globalThis-unicast-ip.js': path.resolve(__dirname, './src/utils/mock.js'),
       './is-globalThis-unicast.js': path.resolve(__dirname, './src/utils/mock.js'),
