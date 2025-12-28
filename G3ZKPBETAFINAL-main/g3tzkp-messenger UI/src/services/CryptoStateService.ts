@@ -174,13 +174,13 @@ class CryptoStateService {
     let backendCircuits: ZKPCircuit[] = [];
 
     try {
-      const response = await fetch('/api/zkp/status');
+      const response = await fetch(`${getApiUrl()}/api/zkp/status`);
       if (response.ok) {
         const data = await response.json();
         engineStatus = data.mode || 'simulated';
       }
 
-      const circuitsResponse = await fetch('/api/zkp/circuits');
+      const circuitsResponse = await fetch(`${getApiUrl()}/api/zkp/circuits`);
       if (circuitsResponse.ok) {
         const circuitsData = await circuitsResponse.json();
         if (circuitsData.circuits && Array.isArray(circuitsData.circuits)) {

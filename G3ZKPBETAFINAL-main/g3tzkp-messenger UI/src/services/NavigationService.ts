@@ -438,7 +438,7 @@ class NavigationService {
       }
 
       // Call backend proxy endpoint
-      const response = await fetch(`/api/navigation/search?${params}`);
+      const response = await fetch(`${this.baseUrl}/api/navigation/search?${params}`);
 
       if (!response.ok) {
         throw new Error(`Search failed: ${response.status}`);

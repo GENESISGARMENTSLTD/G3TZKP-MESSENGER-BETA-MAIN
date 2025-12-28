@@ -178,7 +178,7 @@ export class DeviceSyncService {
       proof: {} // ZKP proof would go here
     };
 
-    const response = await fetch('/api/messages/sync', {
+    const response = await fetch(`${getApiUrl()}/api/messages/sync`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(syncRequest)
@@ -218,7 +218,7 @@ export class DeviceSyncService {
   async revokeDevice(deviceId: string): Promise<void> {
     this.connectedDevices.delete(deviceId);
 
-    await fetch('/api/devices/revoke', {
+    await fetch(`${getApiUrl()}/api/devices/revoke`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ deviceId })
