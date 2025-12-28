@@ -17,7 +17,6 @@ import { kadDHT } from '@libp2p/kad-dht';
 import { gossipsub } from '@chainsafe/libp2p-gossipsub';
 import { identify } from '@libp2p/identify';
 import { ping } from '@libp2p/ping';
-import { fetch } from '@libp2p/fetch';
 import { pipe } from 'it-pipe';
 import { fromString, toString } from 'uint8arrays';
 import { multiaddr } from '@multiformats/multiaddr';
