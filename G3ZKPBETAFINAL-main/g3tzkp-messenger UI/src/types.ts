@@ -380,7 +380,7 @@ export const DEFAULT_OPERATOR_SETTINGS: OperatorSettings = {
   onlineStatusVisible: true,
   lastSeenVisible: true,
   profilePublic: false,
-  theme: 'geodesic',
+  theme: 'g3tzkp',
   fontSize: 'medium',
   language: 'en'
 };
