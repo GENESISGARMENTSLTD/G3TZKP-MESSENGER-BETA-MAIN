@@ -1,0 +1,8 @@
+{
+  "name": "G3ZKP Messenger",
+  "description": "Secure, peer-to-peer encrypted messenger with no middlemen. Your privacy, your keys, your control.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

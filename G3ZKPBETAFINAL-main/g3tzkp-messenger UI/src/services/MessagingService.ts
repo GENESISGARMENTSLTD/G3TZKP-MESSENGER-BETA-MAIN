@@ -127,12 +127,24 @@ class MessagingService {
   }
 
   private getServerUrl(): string {
+    // Check for environment variable first (for production deployment)
+    const envApiUrl = import.meta.env.VITE_API_URL;
+    if (envApiUrl) {
+      console.log('[MessagingService] Using VITE_API_URL:', envApiUrl);
+      return envApiUrl;
+    }
+
     if (typeof window !== 'undefined') {
       const hostname = window.location.hostname;
       const isSecure = window.location.protocol === 'https:';
+      
+      // Local development
       if (hostname === 'localhost' || hostname === '127.0.0.1') {
         return `http://${hostname}:3001`;
       }
+      
+      // Production: use same origin (frontend and backend on same domain)
+      // or construct URL from current location
       const port = window.location.port || (isSecure ? '443' : '80');
       return isSecure 
         ? `https://${hostname}${port !== '443' ? ':' + port : ''}`

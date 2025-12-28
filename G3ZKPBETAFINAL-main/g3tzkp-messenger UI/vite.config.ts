@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [
     react()
   ],
@@ -10,6 +10,7 @@ export default defineConfig({
     'process.env': {},
     'global': 'globalThis',
   },
+  envPrefix: 'VITE_',
   server: {
     host: '0.0.0.0',
     port: 5000,
@@ -77,4 +78,4 @@ export default defineConfig({
   worker: {
     format: 'es',
   },
-})
+}))
