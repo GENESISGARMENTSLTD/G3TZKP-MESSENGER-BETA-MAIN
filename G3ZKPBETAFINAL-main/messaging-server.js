@@ -929,14 +929,14 @@ app.post('/api/transit/europe/stops', async (req, res) => {
     const detectedCountry = country || await detectCountryFromCoords(lat, lon);
     let stops = [];
 
-    if (detectedCountry === 'GB' && TFL_API_KEY) {
+    if (detectedCountry === 'GB') {
       const params = new URLSearchParams({
         lat: String(lat),
         lon: String(lon),
         radius: String(radius),
-        stopTypes: 'NaptanMetroStation,NaptanRailStation,NaptanBusCoachStation',
-        app_key: TFL_API_KEY
+        stopTypes: 'NaptanMetroStation,NaptanRailStation,NaptanBusCoachStation'
       });
+      if (TFL_API_KEY) params.append('app_key', TFL_API_KEY);
       const response = await axios.get(
         `${TFL_API_BASE}/StopPoint?${params}`,
         { timeout: 10000 }
