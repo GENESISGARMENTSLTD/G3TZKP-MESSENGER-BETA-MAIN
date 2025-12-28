@@ -16,9 +16,9 @@ services:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 3001
+        value: "3001"
       - key: BETA_MODE
-        value: true
+        value: "true"
       - key: SESSION_SECRET
         generateValue: true
       - key: COMPANIES_HOUSE_API_KEY
@@ -28,20 +28,5 @@ services:
       - key: ALLOWED_ORIGINS
         value: https://g3zkp-messenger.onrender.com
 
-  # Frontend Static Site
-  - type: web
-    name: g3zkp-messenger
-    runtime: static
-    repo: https://github.com/GENESISGARMENTSLTD/G3TZKP-MESSENGER-BETA-MAIN.git
-    branch: master
-    rootDir: G3ZKPBETAFINAL-main/g3tzkp-messenger UI
-    buildCommand: npm install && npm run build
-    staticPublishPath: dist
-    plan: free
-    envVars:
-      - key: VITE_API_URL
-        value: https://g3zkp-backend.onrender.com
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
+# Static sites are free by default, deployed separately
+# Use the Render Dashboard to create a Static Site manually after backend deploys
