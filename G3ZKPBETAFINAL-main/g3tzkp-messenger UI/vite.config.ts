@@ -29,15 +29,9 @@ export default defineConfig({
   build: {
     target: 'ES2020',
     outDir: 'dist',
-    sourcemap: false,
+    sourcemap: true,
     chunkSizeWarningLimit: 5000,
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-      },
-    },
+    minify: false,
     rollupOptions: {
       output: {
         manualChunks: {
