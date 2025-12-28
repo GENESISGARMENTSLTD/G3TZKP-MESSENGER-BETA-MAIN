@@ -1,15 +1,17 @@
 import { create } from 'zustand';
-import * as Cesium from 'cesium';
 import { Route, Coordinate } from '../types/navigation';
 
+// Cesium is optional - only used for 3D globe view
+type CesiumViewer = any;
+
 interface GlobeState {
-  viewer: Cesium.Viewer | null;
+  viewer: CesiumViewer | null;
   currentPosition: Coordinate | null;
   routes3D: Route[];
   privacyLevel: 'low' | 'medium' | 'high' | 'maximum';
   viewMode: '2d' | '3d';
   
-  setViewer: (viewer: Cesium.Viewer | null) => void;
+  setViewer: (viewer: CesiumViewer | null) => void;
   setCurrentPosition: (position: Coordinate | null) => void;
   add3DRoute: (route: Route) => void;
   clear3DRoutes: () => void;
