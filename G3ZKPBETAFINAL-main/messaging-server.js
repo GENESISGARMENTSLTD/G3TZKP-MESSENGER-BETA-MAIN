@@ -27,7 +27,10 @@ const SOCKET_ALLOWED_ORIGINS = [
   'http://localhost:5000',
   'http://0.0.0.0:5000',
   'http://127.0.0.1:58834',
-  process.env.REPLIT_DEV_DOMAIN ? `https://${process.env.REPLIT_DEV_DOMAIN}` : null
+  'https://g3tzkp-messenger-beta-main.onrender.com',
+  'https://g3zkp-messenger.onrender.com',
+  process.env.REPLIT_DEV_DOMAIN ? `https://${process.env.REPLIT_DEV_DOMAIN}` : null,
+  ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : [])
 ].filter(Boolean);
 
 const io = new Server(httpServer, {
@@ -82,7 +85,10 @@ const ALLOWED_ORIGINS = [
   'http://127.0.0.1:63555',
   'http://127.0.0.1:58834',
   'http://localhost:58834',
-  process.env.REPLIT_DEV_DOMAIN ? `https://${process.env.REPLIT_DEV_DOMAIN}` : null
+  'https://g3tzkp-messenger-beta-main.onrender.com',
+  'https://g3zkp-messenger.onrender.com',
+  process.env.REPLIT_DEV_DOMAIN ? `https://${process.env.REPLIT_DEV_DOMAIN}` : null,
+  ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : [])
 ].filter(Boolean);
 
 app.use((req, res, next) => {
