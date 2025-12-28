@@ -32,9 +32,6 @@
     "packages/*",
     "g3tzkp-messenger UI"
   ],
-  "overrides": {
-    "@libp2p/peer-id": "4.2.4"
-  },
   "devDependencies": {
     "@types/jest": "^29.0.0",
     "@types/node": "^18.15.0",
