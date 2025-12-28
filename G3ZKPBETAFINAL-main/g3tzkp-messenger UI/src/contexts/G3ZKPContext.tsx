@@ -4,7 +4,7 @@ import { messagingService } from '../services/MessagingService';
 import { cryptoService, KeyBundle, SessionInfo } from '../services/CryptoService';
 import { zkpService, ZKProof, CircuitInfo } from '../services/ZKPService';
 import peerDiscoveryService from '../services/PeerDiscoveryService';
-import { AntiTraffickingSystem } from '../../../Packages/anti-trafficking/src/index';
+import { AntiTraffickingSystem } from '../services/anti-trafficking/index';
 
 export type { ZKProof, CircuitInfo, KeyBundle };
 
